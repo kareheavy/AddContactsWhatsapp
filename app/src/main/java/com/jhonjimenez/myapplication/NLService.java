@@ -44,7 +44,7 @@ public class NLService extends NotificationListenerService {
 
         Log.i(TAG, "**********  onNotificationPosted");
         Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + sbn.getPackageName());
-        if (sbn.getNotification() != null && sbn.getPackageName().equals("com.whatsapp") && sbn.getNotification().tickerText != null) {
+        if (sbn.getNotification() != null && sbn.getPackageName().contains("com.whatsapp")  && sbn.getNotification().tickerText != null) {
 
             Bundle bundle = sbn.getNotification().extras;
             if (bundle != null) {
@@ -55,9 +55,12 @@ public class NLService extends NotificationListenerService {
                     if(arraySplit.length == 2){
                         title = arraySplit[1];
 
-                        if (title.length() == 14) {
+                        if (title.length() >= 10) {
                             //title = title.substring(2);
-                            //title = title.replace(" ", "");
+                            title = title.replace(" ", "");
+                            title = title.replace("-", "");
+                            title = title.replace("(", "");
+                            title = title.replace(")", "");
                             if (title.matches("[0-9 ]+")) {
                                 title = "+" + title;
                                 if (!titles.contains(title)) {
